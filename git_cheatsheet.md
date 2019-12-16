@@ -1,1 +1,2 @@
-# LeetCode
+#### Create Repo 
+``` git init ```
