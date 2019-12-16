@@ -18,9 +18,20 @@
 ``` git commit -m "commit message" ```
 #### Status of working tree 
 ``` git status ```
+#### Create Branch 
+``` git branch <branch_name> ```
+#### Switch Branch 
+``` git checkout <branch_name> ```
+#### Merge Branch 
+``` git merge <branch_name> ```
 
 ## Remote Repo 
-
+#### Add Remote repo to local repo 
+``` git remote add origin <link>
+#### Set remote as the upstream branch 
+``` git push --set-upstream origin master ```
+#### Current remote setting 
+``` git remote -v ```
 #### Pull 
 ``` git pull ```
 #### Pull origin master 
