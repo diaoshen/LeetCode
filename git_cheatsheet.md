@@ -13,9 +13,7 @@
 ``` touch .gitignore ```
 
 #### Add File(s) to stage 
-``` git add <file1> <file2> <file3>  ```
-#### Add All files to stage 
-``` git add . ```
+``` git add <file1> <file2> <file3>  ```   or ``` git add . ``` to add all files.
 #### Commit 
 ``` git commit -m "commit message" ```
 #### Status of working tree 
