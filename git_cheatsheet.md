@@ -26,6 +26,8 @@
 ``` git merge <branch_name> ```
 
 ## Remote Repo 
+#### Clone Repo 
+``` git clone <link> ```
 #### Add Remote repo to local repo 
 ``` git remote add origin <link> ```
 #### Set remote as the upstream branch 
@@ -36,5 +38,8 @@
 ``` git pull ```
 #### Pull origin master 
 ``` git pull origin master ```
-#### Clone Repo 
-``` git clone <link> ```
+#### Push 
+``` git push ```
+#### Push origin master 
+``` git push origin master ```
+
