@@ -1,0 +1,88 @@
+https://leetcode.com/problems/two-sum/
+
+1. Two Sum
+Easy
+
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+Example:
+
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+
+
+/* CPP */ 
+Solution 1 : Brute force  -> O(n*n) 
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int lookFor = 0;
+        int index1,index2 = 0;
+        for(int i = 0 ; i < nums.size() ; i++){
+            lookFor = target - nums[i];
+            for(int j = i + 1 ; j < nums.size() ; j++){
+                if(nums[j] == lookFor){
+                   return {i,j};
+                }
+            }
+        }
+        return nums; //Error if reach here.
+    }
+};
+
+
+Soltuion 2 : One pass hash table -> O(n) 
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,int> lookup;	
+        for(int i = 0 ; i < nums.size() ; i++){
+            int complement = target-nums[i];
+            if(lookup.find(complement) != lookup.end()){
+                return {i,lookup[complement]};
+            }else{
+                lookup.insert(std::pair<int,int>(nums[i],i));
+            }
+        }
+        return {};
+    }
+};
+
+
+
+
+
+/* Java */ 
+
+Solution 1 : Brute force - > O(n*n)
+
+public int[] twoSum(int[] nums, int target) {
+    for (int i = 0; i < nums.length; i++) {
+        for (int j = i + 1; j < nums.length; j++) {
+            if (nums[j] == target - nums[i]) {
+                return new int[] { i, j };
+            }
+        }
+    }
+    throw new IllegalArgumentException("No two sum solution");
+}
+
+Soltuion 2 : One pass hash table -> O(n) 
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i]))
+                return new int[] {map.get(target - nums[i]), i};
+            map.put(nums[i], i);
+        }
+        return null; 
+    }
+}
