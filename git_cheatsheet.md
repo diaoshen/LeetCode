@@ -9,9 +9,10 @@
 
 #### Create local Repo 
 ``` git init ```
+#### Remove local Repo 
+``` rm -r .git ```
 #### Create git ignore 
 ``` touch .gitignore ```
-
 #### Add File(s) to stage 
 ``` git add <file1> <file2> <file3>  ```   or ``` git add . ``` to add all files.
 #### Commit 
