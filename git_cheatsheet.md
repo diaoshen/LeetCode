@@ -29,14 +29,20 @@
 ## Remote Repo 
 #### Clone Repo 
 ``` git clone <link> ```
-#### Add Remote repo to local repo 
+#### Add Remote repo to local repo / Add remote reference 
 ``` git remote add origin <link> ```
 #### Set remote as the upstream branch 
 ``` git push --set-upstream origin master ```
-#### Current remote setting 
+#### Show remote branch
+``` git branch -a -r ```
+#### Fetch list of branches on remote and remove local remote tracking that doesn't exist anymore on remote.
+``` git remote update --prune ```
+#### Current remote push/pull setting 
 ``` git remote -v ```
-#### Pull 
+#### Pull current branch
 ``` git pull ```
+#### Pull all branch 
+``` git pull --all ```
 #### Pull origin master 
 ``` git pull origin master ```
 #### Push 
