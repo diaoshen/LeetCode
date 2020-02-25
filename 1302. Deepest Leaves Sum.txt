@@ -1,0 +1,73 @@
+1302. Deepest Leaves Sum
+Medium
+
+
+Given a binary tree, return the sum of values of its deepest leaves.
+ 
+
+Example 1:
+
+
+Input: root = [1,2,3,4,5,null,6,7,null,null,null,null,8]
+Output: 15
+ 
+
+Constraints:
+
+The number of nodes in the tree is between 1 and 10^4.
+The value of nodes is between 1 and 100.
+
+
+
+
+C++ Recursive solution 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int getMaximumDepth(TreeNode* x) {
+        return x == NULL? 0 :  1 + max(getMaximumDepth(x->left),getMaximumDepth(x->right));
+    }
+    int helper(TreeNode* x , int MD , int D) {
+        if (x == NULL) return 0;
+        if (x->left == NULL and x->right == NULL and MD == D) return x->val;
+        return helper(x->left,MD,D+1) + helper(x->right,MD,D+1);
+    }
+    int deepestLeavesSum(TreeNode* root) {
+        return helper(root,getMaximumDepth(root),1);
+    }
+};
+
+Java Recursive solution
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int deepestLeavesSum(TreeNode root) {
+        if(root.left == null && root.right == null) return root.val;
+        return helper(root,getMaximumDepth(root),1);
+    }
+    
+    int getMaximumDepth(TreeNode x) {
+        return x == null? 0 :  1 + Math.max(getMaximumDepth(x.left),getMaximumDepth(x.right));
+    }
+    int helper(TreeNode x , int MD , int D) {
+        if (x == null) return 0;
+        if (x.left == null && x.right == null && MD == D) return x.val;
+        return helper(x.left,MD,D+1) + helper(x.right,MD,D+1);
+    }
+
+}
