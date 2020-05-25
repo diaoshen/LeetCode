@@ -73,3 +73,75 @@ public:
     }
 
 };
+
+
+Print Solution 
+
+#include <iostream>
+#include <vector>
+
+using namespace std; 
+
+/**
+	(1)using >= will yield biggest first cut   , using > will yield smallest first cut
+	:: means friend
+**/
+ long long int integerBreak(long long int n) {
+	 	vector<long long int> s(n+1, 1);
+        vector<long long int> r(n+1, 1);
+        for(int j = 3 ; j <= n ; j++){
+            long long int q = -999;
+			long long int bestcut = -999;
+            for(int i = 1 ; i < j; i++){
+				int curr = i*r[j-i];
+					if(curr >= q) { //(1)
+						if(j == n){
+							cout << i << " :: " << j-i << " => " << curr << endl;
+						}
+						q = curr;
+						bestcut = i;
+					}
+				curr = i*(j-i);
+				if(curr >= q) {
+						if(j == n){
+							cout << i << " : " << j-i << " => " << curr << endl;
+						}
+					bestcut = i;
+					q = curr;
+				}
+                // q = max( q, i*r[j-i]);
+                // q = max( q, i*(j-i));
+            }
+			s[j] = bestcut;
+            r[j] = q;
+        }
+
+        
+		long long int k = n;
+
+
+		while( k > 0 ) {
+			cout << s[k] << " , ";
+			k -= s[k];
+			if(n > 3 && k <= 3) {
+				cout << k;
+				break;
+			}
+		}
+		cout << endl << endl;
+		for(int i = 0 ; i < s.size(); i++){
+			cout << i << ",";
+		}
+		cout << endl;
+		for(int x : s) {
+			cout << x << ',';
+		}
+		cout << endl;
+        return r[n];
+}
+
+int main() {
+	int res = integerBreak(10);
+	cout << "Res = " << res << endl;
+}
+
