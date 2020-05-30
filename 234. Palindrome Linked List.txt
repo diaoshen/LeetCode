@@ -1,0 +1,98 @@
+234. Palindrome Linked List
+Easy
+
+
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if(head == nullptr) return true; //  0 element 
+        if(head->next == nullptr) return true; //1 element
+        if(head->next->next == nullptr) return head->val == head->next->val; // 2 element 
+
+        // 3+ 
+        ListNode* mid;
+        ListNode* ptr;
+        ptr  = mid = head;
+        int count = 0;
+
+        while(ptr != nullptr){
+            if(count == 2) {
+                mid = mid->next;
+                count = 0;
+            }
+            ptr = ptr->next;
+            count++;
+        }
+      //  cout << "Found mid to be " <<  mid->val << endl;
+
+
+        //Reverse
+        ListNode* A = mid->next;
+        ListNode* B = A->next;
+        ListNode* C = (B == nullptr)? nullptr : B->next;
+
+        // 3+ element 
+        if(B != nullptr) {
+            if(C != nullptr){
+                do {
+                    B->next = A;
+                    A = B;
+                    B = C;
+                    C = C->next;
+                } while(C != nullptr);
+            }
+            B->next = A;
+
+            mid->next->next = nullptr;
+            mid->next = B;
+        }
+
+
+        cout << "Head is " << head->val << endl;
+        cout << "Mid is " << mid->val << endl;
+        cout << "Mid's next is " << mid->next->val << endl;
+
+        ptr = head;
+        while(ptr) {
+            cout << ptr->val << " -> ";
+            ptr = ptr->next;
+        }
+        cout << " /" << endl;
+
+        A = head;
+        B = mid->next;
+
+        while(A != nullptr && B != nullptr) {
+            if(A->val != B->val) return false;
+            A = A->next;
+            B = B->next;
+        }
+
+
+        return true;
+    }
+};
