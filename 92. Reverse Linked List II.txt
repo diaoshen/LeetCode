@@ -1,0 +1,81 @@
+92. Reverse Linked List II
+Medium
+
+
+Reverse a linked list from position m to n. Do it in one-pass.
+
+Note: 1 ≤ m ≤ n ≤ length of list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
+
+
+
+C++ Iteratively 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+ListNode* reverseBetween(ListNode* head, int m, int n) {
+	
+    if( m == n ) return head;
+
+	// reach to position m assume list have enough 
+	ListNode* ptr = head;
+    
+	int count = 1;
+	
+	// Get ptr to m-1 position 
+	while(ptr && count != m-1 && m != 1) {
+		ptr = ptr->next;
+		count++;
+	}
+	// Have enough 
+	if((count == m-1 || m == 1) && ptr->next != nullptr) {
+		//Reverse 
+
+		//curr points to position m 
+		ListNode* curr = (m == 1)? ptr : ptr->next; 
+		ListNode* prev = nullptr;
+		ListNode* next;
+		// m + n  => 2-4+1 
+		count = n-m+1;
+	//	cout << "Curr is " << curr->val << endl;
+		while(curr != nullptr && count != 0) {
+			next = curr->next;
+			curr->next = prev;
+			prev = curr;
+			curr = next;
+			count--;
+		}
+	//	print(prev);
+		//cout << ptr->val << endl;
+		// Connect for ideal 
+		if(m > 1 && next != nullptr){
+            ptr->next->next = next; // connect m to end
+			ptr->next = prev; // connect n to start
+        } else if(m == 1 && next != nullptr) {
+			// Connect END only 
+			head->next = next;
+			head = prev;
+            
+		} else if(m > 1 && next == nullptr) {
+			// COnnect Head only 
+			ptr->next = prev;
+		} else {
+            head = prev;
+		}
+	}
+	return head;
+}
+};
