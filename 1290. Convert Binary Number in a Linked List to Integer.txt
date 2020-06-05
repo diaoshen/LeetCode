@@ -1,0 +1,103 @@
+1290. Convert Binary Number in a Linked List to Integer
+Easy
+
+
+Given head which is a reference node to a singly-linked list. The value of each node in the linked list is either 0 or 1. The linked list holds the binary representation of a number.
+
+Return the decimal value of the number in the linked list.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,0,1]
+Output: 5
+Explanation: (101) in base 2 = (5) in base 10
+Example 2:
+
+Input: head = [0]
+Output: 0
+Example 3:
+
+Input: head = [1]
+Output: 1
+Example 4:
+
+Input: head = [1,0,0,1,0,0,1,1,1,0,0,0,0,0,0]
+Output: 18880
+Example 5:
+
+Input: head = [0,0]
+Output: 0
+ 
+
+Constraints:
+
+The Linked List is not empty.
+Number of nodes will not exceed 30.
+Each node's value is either 0 or 1.
+
+
+
+
+//C++ Recursively with disable sync and io tie 
+static int _=[]() {std::ios::sync_with_stdio(false);cin.tie(0);return 0;}();
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+
+
+    int helper(ListNode* node , int &sum) {
+        if(!node) return 0;
+        int i = helper(node->next , sum);
+        if(node->val == 1) sum+= pow(2,i);
+        return i+1;
+    }    
+    
+    int getDecimalValue(ListNode* head) {
+        int sum = 0;
+        helper(head, sum);
+        return sum;
+    }
+};
+
+
+//C++ Iterative 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int getDecimalValue(ListNode* head) {
+        int i = 0; 
+        int sum = 0;
+        stack<ListNode*> st;
+        while(head) {
+            st.push(head);
+            head = head->next;
+        }
+        while(!st.empty()) {
+            ListNode* node = st.top(); st.pop();
+            if(node->val == 1) sum += pow(2,i);
+            i++;
+        }
+        return sum;
+    }
+};
