@@ -27,10 +27,10 @@ public:
     vector<int> replaceElements(vector<int>& arr) {
         int size = arr.size();
         int max = arr[size-1];
-        for(int i = size-1 ; i>= 0 ; i--) {
+        for(int i = size-2 ; i>= 0 ; i--) {
             int curr = arr[i];
             arr[i] = max;
-            if(curr > max) max = curr;
+            max = std::max(max,curr);
         }
         arr[size-1] = -1;
         return arr;
