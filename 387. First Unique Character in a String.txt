@@ -1,0 +1,52 @@
+387. First Unique Character in a String
+Easy
+
+
+Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+
+Examples:
+
+s = "leetcode"
+return 0.
+
+s = "loveleetcode",
+return 2.
+
+
+
+// C++ 
+static auto _=[](){std::ios::sync_with_stdio(false); cin.tie(0);};
+class Solution {
+public:
+
+    int firstUniqChar(string s) {
+    
+        int n = s.length(),i,j;
+
+        if(n==0)
+          return -1;
+
+        int a[26]={0};
+        for(i=0;i<n;i++)
+            a[s[i]-97]++;
+
+        for(i=0;i<n;i++)
+            if(a[s[i]-97] == 1)
+                return i;
+        return -1;
+
+    }
+};
+
+
+// C++ 
+static auto _=[](){std::ios::sync_with_stdio(false); cin.tie(0);};
+class Solution {
+public:
+     int firstUniqChar(string s) {
+         unordered_map<char,int> map;
+         for(auto& ch : s) map[ch]++;
+         for(auto& ch : s) if(map[ch] == 1) return &ch - &s[0];
+         return -1;
+     } 
+};

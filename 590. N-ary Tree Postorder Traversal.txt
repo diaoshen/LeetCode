@@ -1,0 +1,154 @@
+590. N-ary Tree Postorder Traversal
+Easy
+
+
+Given an n-ary tree, return the postorder traversal of its nodes' values.
+
+Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).
+
+ 
+
+Follow up:
+
+Recursive solution is trivial, could you do it iteratively?
+
+ 
+
+Example 1:
+
+
+
+Input: root = [1,null,3,2,4,null,5,6]
+Output: [5,6,3,2,4,1]
+Example 2:
+
+
+
+Input: root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+Output: [2,6,14,11,7,3,12,8,4,13,9,10,5,1]
+ 
+
+Constraints:
+
+The height of the n-ary tree is less than or equal to 1000
+The total number of nodes is between [0, 10^4]
+
+
+
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+    }
+
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+
+
+
+// C++ Recursive
+class Solution {
+public:
+    void helper(Node* node , vector<int>& res) {
+        for(auto &child : node->children) {
+          if(child != nullptr) helper(child,res);
+        }
+        res.push_back(node->val);
+    }
+    vector<int> postorder(Node* root) {
+        if(root == nullptr) return {};
+        vector<int> res;
+        helper(root,res);
+        return res;
+    }
+};
+
+
+// C++ iteratively  true postorder path 
+class Solution {
+public:
+    vector<int> postorder(Node* root) {
+        if(!root) return {};
+        vector<int> res;
+        stack<Node*> st;
+        st.push(root);
+        while(!st.empty()) {
+            Node* node = st.top();
+
+            // expandable 
+            if(node->children.empty() == false) {
+                //push visited indicator 
+                st.push(new Node(-1));
+                // Add neighbors 
+                vector<Node*> expand = node->children;
+                for(auto it = expand.rbegin() ; it != expand.rend(); it++) {
+                    st.push(*it);
+                }
+                continue;
+            }
+            // Expanded or Not expandable then print 
+            if(node->val == -1) {
+                st.pop();
+                res.push_back(st.top()->val); st.pop();
+            } else {
+                res.push_back(node->val);
+                st.pop();
+            }
+        }
+        return res;
+        
+    }
+};
+
+// C++ True Postorder v2 improved using C++17
+class Solution {
+public:
+    vector<int> postorder(Node* root) {
+        if (!root) {
+            return {};
+        }
+        std::stack<std::pair<Node *, int>> s;
+        std::vector<int> res;
+        s.emplace(root, 0);
+        while (!s.empty()) {
+            auto &[node, index] = s.top();
+            if (index == node->children.size()) {
+                res.push_back(node->val);
+                s.pop();
+            } else {
+                s.emplace(node->children[index++], 0);
+            }
+        }
+        return res;
+    }
+};
+
+
+
+// C++ fake path using reverse
+class Solution {
+public:
+    vector<int> postorder(Node* root) {
+        if(!root) return {};
+        vector<int> res;
+        stack<Node*> st;
+        st.push(root);
+        while(!st.empty()) {
+            Node* root = st.top(); st.pop();
+            res.push_back(root->val);
+            for(auto &node : root->children) st.push(node);
+        }
+        reverse(res.begin() , res.end());
+        return res;
+        
+    }
+};

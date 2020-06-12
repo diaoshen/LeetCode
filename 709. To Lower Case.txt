@@ -1,0 +1,37 @@
+709. To Lower Case
+Easy
+
+
+Implement function ToLowerCase() that has a string parameter str, and returns the same string in lowercase.
+
+ 
+
+Example 1:
+
+Input: "Hello"
+Output: "hello"
+Example 2:
+
+Input: "here"
+Output: "here"
+Example 3:
+
+Input: "LOVELY"
+Output: "lovely"
+
+
+
+// C++ 
+class Solution {
+public:
+    string toLowerCase(string str) {
+        string res;
+        for(char &ch : str) {
+            if(ch >= 'A' && ch <= 'Z')
+                res += 'a' + (ch-'A');
+            else
+                res += ch;
+        }
+        return res;
+    }
+};
