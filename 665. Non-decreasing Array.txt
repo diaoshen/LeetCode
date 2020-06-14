@@ -1,0 +1,91 @@
+665. Non-decreasing Array
+Easy
+
+
+Given an array nums with n integers, your task is to check if it could become non-decreasing by modifying at most 1 element.
+
+We define an array is non-decreasing if nums[i] <= nums[i + 1] holds for every i (0-based) such that (0 <= i <= n - 2).
+
+ 
+
+Example 1:
+
+Input: nums = [4,2,3]
+Output: true
+Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
+Example 2:
+
+Input: nums = [4,2,1]
+Output: false
+Explanation: You can't get a non-decreasing array by modify at most one element.
+ 
+
+Constraints:
+
+1 <= n <= 10 ^ 4
+- 10 ^ 5 <= nums[i] <= 10 ^ 5
+
+
+
+// C++ 
+class Solution {
+public:
+bool checkPossibility(vector<int>& nums) {
+        int cnt = 0;    //the number of changes
+        for(int i = 1; i < nums.size() && cnt<=1 ; i++){
+            if(nums[i-1] > nums[i]){
+                cnt++;
+                //modify nums[i-1] of a priority  ex:  1 2 3 4 [2] 5 6
+                if(i-2<0 || nums[i-2] <= nums[i]) nums[i-1] = nums[i]; 
+                // 4 [3] 6  
+                else nums[i] = nums[i-1];     //have to modify nums[i]
+            }
+        }
+        return cnt<=1;
+    } 
+};
+
+
+// C++ 
+class Solution {
+public:
+    bool checker(vector<int>& nums , int startIndex) {
+        for(int i = startIndex ; i < nums.size() - 1; i++) {
+            if(nums[i] > nums[i+1]) return false;
+        }
+        return true;
+    }
+    bool checkPossibility(vector<int>& nums) {
+        if(nums.size() == 1) return true;
+        // If error happen at the head
+        if(nums[0] > nums[1]) {
+            if(checker(nums,1)) return true;
+            nums[1] = nums[0];
+            if(checker(nums,1)) return true;
+            
+            return false;
+        }
+        // If error happen in the middle 
+        for(int i = 1 ; i < nums.size() - 1; i++) {
+            if(nums[i] > nums[i+1]) {
+                //either replace nums[i] with nums[i+1] only if i+1 is >= max so far  
+                // or  replace nums[i+1] with nums[i]
+                int x = nums[i];
+                int y = nums[i+1];
+                
+                if(y >= nums[i-1]) {
+                    nums[i] = y;
+                    if(checker(nums, i+1)) return true;
+                }
+                
+                if(x >= nums[i-1]) {
+                    nums[i+1] = x;
+                    if(checker(nums , i+1)) return true;
+                }
+                
+                return false;
+            }
+        }
+        return true;
+    }
+};

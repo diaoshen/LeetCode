@@ -1,0 +1,66 @@
+326. Power of Three
+Easy
+
+Given an integer, write a function to determine if it is a power of three.
+
+Example 1:
+
+Input: 27
+Output: true
+Example 2:
+
+Input: 0
+Output: false
+Example 3:
+
+Input: 9
+Output: true
+Example 4:
+
+Input: 45
+Output: false
+Follow up:
+Could you do it without using any loop / recursion?
+
+
+
+// C++  Using math O(1) O(1) 
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        if(n == 0) return false;
+        double power = log10(n)/log10(3);
+        return floor(power) == power; 
+    }
+};
+
+// C++ Integer limitation
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        return n>0 && (1162261467%n == 0);
+    }
+};
+
+
+// C++ brute force O(logn)
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        if (n<=0) return false;
+        while(n>1) {
+            if (n%3!=0) return false;
+            n /= 3;
+        }
+        return true;
+    }
+};
+
+
+// C++ Recursion
+class Solution {
+public:
+    bool isPowerOfThree(int n) {   
+       return n == 1 ? true : (n > 1  && n % 3 == 0) ? isPowerOfThree(n/3) : false;
+    }
+};

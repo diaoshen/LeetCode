@@ -1,0 +1,93 @@
+680. Valid Palindrome II
+Easy
+
+1534
+
+99
+
+Add to List
+
+Share
+Given a non-empty string s, you may delete at most one character. Judge whether you can make it a palindrome.
+
+Example 1:
+Input: "aba"
+Output: True
+Example 2:
+Input: "abca"
+Output: True
+Explanation: You could delete the character 'c'.
+Note:
+The string will only contain lowercase characters a-z. The maximum length of the string is 50000.
+
+
+
+// C++ 
+class Solution {
+public:
+    bool validPalindrome(string s) {
+      int i = 0, j = s.size() - 1;
+      while (i < j) {
+        if (s[i] != s[j]) return check(s, i+1, j) || check(s, i, j-1);
+        ++i, --j;
+      }
+      return true;
+    }
+    bool check(string s, int i, int j) {
+      while (i < j) {
+        if (s[i] != s[j]) return false;
+        ++i, --j;
+      }
+      return true;
+    }
+};
+
+
+// C++ 
+class Solution {
+public:
+bool validPalindrome(string s) {
+	int len = s.length();
+	if(len <= 1) return true;
+	int tolerance = 0;
+	int start = 0;
+	int end = len-1;
+	bool exhaust = false; // true only if exhaust all choices 
+	pair<int,int> alt;
+	while(start <= end) {
+
+		if(start >= end) return true;
+		if(s[start] != s[end]) {
+
+			if(exhaust == true) return false;
+
+			if(tolerance == 1 && exhaust == false) {
+				start = alt.first;
+				end = alt.second;
+				exhaust = true;
+				continue;
+			}
+
+            // Don't know which path is correct so choose one and save the alt path 
+			if(s[start] == s[end-1] && s[start+1] == s[end]) {
+				alt = {start+1 , end};
+				end--;		
+			} else {
+                // Know which path to take, if fail then for sure is fail ! 
+				exhaust = true;
+                if(s[start] == s[start+1]) end--; // first 2 same , remove end 
+			    else if(s[end] == s[end-1]) start++; // last 2 same  , remove head 
+			    else if(s[start+1] == s[end]) start++; //Remove head 
+			    else if(s[start] == s[end-1]) end--; // Remove end 
+				else return false;
+			}
+
+			tolerance++;
+			continue;
+		} 
+		start++;
+		end--;
+	}
+	return true;        
+}
+};
